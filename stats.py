@@ -1,15 +1,10 @@
 def get_num_words(source):
     count = len(source.split())
-    print(f"{count} words found in the document")
+    print("----------- Word Count ----------")
+    print(f"Found {count} total words")
 
+from collections import OrderedDict
 
-"""
-    Add a new function to your stats.py file that takes the text from the book as a string, and returns the number of times each character, (including symbols and spaces), appears in the string.
-        Convert any character to lowercase using the .lower() method, we don't want duplicates.
-        Use a dictionary of String -> Integer. The returned dictionary should look something like this:
-
-{'p': 6121, 'r': 20818, 'o': 25225, ...
-"""
 def character_count(source):
     with open(source) as f:
         file_contents = str.lower(f.read())
@@ -19,5 +14,27 @@ def character_count(source):
                 char_count[i.lower()] = char_count[i.lower()] + 1
             else:
                 char_count[i.lower()] = 1
-        print(char_count)
-        
+        desc_list = OrderedDict(sorted(char_count.items()))
+        ord_list = sorted(desc_list.items(), key=lambda x: x[1], reverse=True)
+
+        print("--------- Character Count -------")
+        for key, value in ord_list:
+            if key.isalpha(): 
+	            print(f"{key}: {value}")
+
+""" The Hint
+# A function that takes a dictionary and returns the value of the "num" key
+# This is how the `.sort()` method knows how to sort the list of dictionaries
+def sort_on(dict):
+    return dict["num"]
+
+vehicles = [
+    {"name": "car", "num": 7},
+    {"name": "plane", "num": 10},
+    {"name": "boat", "num": 2}
+]
+vehicles.sort(reverse=True, key=sort_on)
+print(vehicles)
+# [{'name': 'plane', 'num': 10}, {'name': 'car', 'num': 7}, {'name': 'boat', 'num': 2}]
+
+"""
